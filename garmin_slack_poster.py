@@ -444,17 +444,16 @@ def _fmt_training_effect(value: float | None) -> str:
     return f"{value:.1f} — {label}"
 
 
+_ZONE_COLORS = ["⚪", "🔵", "🟢", "🟠", "🔴"]  # Z1–Z5 matching Garmin's zone colours
+
 def _fmt_hr_zones(activity: dict) -> str | None:
     times = [activity.get(f"hrTimeInZone_{i}") or 0 for i in range(1, 6)]
     if not any(times):
         return None
-    max_t = max(times) or 1
     parts = []
-    for i, t in enumerate(times, 1):
-        bar_len = round((t / max_t) * 8)
-        bar = "█" * bar_len if bar_len > 0 else "·"
+    for i, (color, t) in enumerate(zip(_ZONE_COLORS, times), 1):
         m, s = divmod(int(t), 60)
-        parts.append(f"Z{i} {bar} {m}:{s:02d}")
+        parts.append(f"{color} {m}:{s:02d}")
     return "  ".join(parts)
 
 

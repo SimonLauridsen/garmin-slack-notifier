@@ -13,7 +13,7 @@ Any public Garmin profile can be watched — no social connection or Garmin frie
 ⏱️ Duration: 1:18:30
 👎 Avg Pace: 5:18 /km
 ❤️ Avg HR: 157 bpm
-🫀 HR Zones: Z1 · 0:11  Z2 · 0:23  Z3 █ 4:14  Z4 ███████ 34:24  Z5 ████████ 39:00
+🫀 HR Zones: ⚪ 0:11  🔵 0:23  🟢 4:14  🟠 34:24  🔴 39:00
 ⚡ Training Effect: 5.0 — Overreaching
 🫁 VO2 Max: 46
 🔗 Activity: Morning Run
@@ -21,7 +21,7 @@ Any public Garmin profile can be watched — no social connection or Garmin frie
 
 The pace icon is dynamic: 👍 for pace ≤ 5:00/km, 👎 for pace above 5:00/km (uses custom Slack emoji `:thumbsup-kilse:` / `:thumbsdown-kilse:`).
 
-The HR zone bar scales proportionally — the widest bar always represents the dominant zone.
+HR zones use Garmin's colour scheme: ⚪ Z1 (rest) → 🔵 Z2 (easy) → 🟢 Z3 (aerobic) → 🟠 Z4 (threshold) → 🔴 Z5 (max).
 
 ## Requirements
 
