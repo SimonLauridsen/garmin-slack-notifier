@@ -122,12 +122,40 @@ launchctl load   ~/Library/LaunchAgents/com.yourname.garmin-slack.plist
 4. Posts any activity not already in `seen_activities.json` to Slack
 5. Saves updated `seen_activities.json` (capped at 500 IDs) and exits
 
+## Monthly Roundup
+
+On the last day of each month at 23:59, a summary is posted to Slack with aggregated stats per user and four category awards.
+
+```
+📊 *April 2026 — Monthly Running Roundup*
+
+                  │    AJ    │    BS    │    CB    
+──────────────────┼──────────┼──────────┼──────────
+Distance          │ 82.3 km  │ 54.1 km  │ 31.7 km  
+Total Time        │  7h 48m  │  5h 12m  │  3h 05m  
+Avg Pace          │ 5:41 /km │ 5:46 /km │ 5:50 /km 
+Top Zone          │Z4 Thresh.│Z3 Aerobic│Z4 Thresh.
+Avg HR            │ 151 bpm  │ 148 bpm  │ 155 bpm  
+VO2 Max           │    54    │    51    │    48    
+# Runs            │    6     │    5     │    4     
+
+🥇 *Distance King* — Alice Johnson  (82.3 km)
+⚡ *Speed Demon* — Alice Johnson  (5:41 /km)
+🔥 *Cardio Warrior* — Bob Smith  (3h 22m in 🟠+🔴)
+💚 *Iron Heart* — Bob Smith  (avg 148 bpm)
+
+🏆 *Overall Champion of April — Alice Johnson!*
+```
+
+Scheduled via a separate LaunchAgent (`com.yourname.garmin-monthly.plist`) that runs daily at 23:59 — the script exits silently on any day that isn't the last of the month.
+
 ## Files
 
 | File | Description |
 |------|-------------|
 | `garmin_login.py` | One-time Garmin authentication — run this first |
-| `garmin_slack_poster.py` | Main script — fetches activities and posts to Slack |
+| `garmin_slack_poster.py` | Polls for new runs every 30 min and posts to Slack |
+| `garmin_monthly_roundup.py` | Posts end-of-month stats table and awards |
 | `garmin_sleep.py` | Utility script to display your latest sleep data |
 | `seen_activities.json` | Tracks already-posted activity IDs (auto-managed) |
 | `.env.example` | Environment variable template |
