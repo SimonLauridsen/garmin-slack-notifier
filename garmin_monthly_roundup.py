@@ -114,9 +114,10 @@ def compute_stats(activities: list[dict]) -> dict | None:
 # ── table builder ─────────────────────────────────────────────────────────────
 
 def build_table(user_stats: list[tuple[str, dict | None]]) -> str:
-    cols = [initials(name) for name, _ in user_stats]
-    col_w = max(10, max(len(c) for c in cols) + 2)
-    lbl_w = 18
+    cols   = [initials(name) for name, _ in user_stats]
+    col_w  = max(10, max(len(c) for c in cols) + 2)
+    labels = ["Distance", "Total Time", "Avg Pace", "Top Zone", "Avg HR", "VO2 Max", "# Runs"]
+    lbl_w  = max(len(l) for l in labels) + 1  # +1 for a single space of right-padding
 
     def c(val: str) -> str:
         return val.center(col_w)

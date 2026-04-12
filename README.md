@@ -129,15 +129,15 @@ On the last day of each month at 23:59, a summary is posted to Slack with aggreg
 ```
 📊 *April 2026 — Monthly Running Roundup*
 
-                  │    AJ    │    BS    │    CB    
-──────────────────┼──────────┼──────────┼──────────
-Distance          │ 82.3 km  │ 54.1 km  │ 31.7 km  
-Total Time        │  7h 48m  │  5h 12m  │  3h 05m  
-Avg Pace          │ 5:41 /km │ 5:46 /km │ 5:50 /km 
-Top Zone          │Z4 Thresh.│Z3 Aerobic│Z4 Thresh.
-Avg HR            │ 151 bpm  │ 148 bpm  │ 155 bpm  
-VO2 Max           │    54    │    51    │    48    
-# Runs            │    6     │    5     │    4     
+           │    AJ    │    BS    │    CB    
+───────────┼──────────┼──────────┼──────────
+Distance   │ 82.3 km  │ 54.1 km  │ 31.7 km  
+Total Time │  7h 48m  │  5h 12m  │  3h 05m  
+Avg Pace   │ 5:41 /km │ 5:46 /km │ 5:50 /km 
+Top Zone   │Z4 Thresh.│Z3 Aerobic│Z4 Thresh.
+Avg HR     │ 151 bpm  │ 148 bpm  │ 155 bpm  
+VO2 Max    │    54    │    51    │    48    
+# Runs     │    6     │    5     │    4     
 
 🥇 *Distance King* — Alice Johnson  (82.3 km)
 ⚡ *Speed Demon* — Alice Johnson  (5:41 /km)
