@@ -504,20 +504,26 @@ def post_run(slack: WebClient, channel: str, activity: dict) -> None:
     ]
     text = "\n".join(lines)
     try:
-        slack.chat_postMessage(channel=channel, text=text, unfurl_links=False)
+        resp = slack.chat_postMessage(channel=channel, text=text, unfurl_links=False)
         log.info("Posted: %s — %s %s", name, distance, duration)
+        return resp["ts"]
     except SlackApiError as e:
         log.error("Slack error: %s", e.response["error"])
+    return None
 
 
 # ── seen activities ───────────────────────────────────────────────────────────
 
-def load_seen() -> set[str]:
-    return set(_read_json(SEEN_FILE).get("seen_ids", []))
+def load_seen() -> tuple[set[str], dict[str, str]]:
+    data = _read_json(SEEN_FILE)
+    return set(data.get("seen_ids", [])), data.get("threads", {})
 
 
-def save_seen(seen: set[str]) -> None:
-    _write_json(SEEN_FILE, {"seen_ids": sorted(seen)[-MAX_SEEN_IDS:]})
+def save_seen(seen: set[str], threads: dict[str, str]) -> None:
+    ids = sorted(seen)[-MAX_SEEN_IDS:]
+    # Prune threads for IDs that were evicted
+    pruned = {aid: ts for aid, ts in threads.items() if aid in set(ids)}
+    _write_json(SEEN_FILE, {"seen_ids": ids, "threads": pruned})
 
 
 # ── main check ────────────────────────────────────────────────────────────────
@@ -525,7 +531,7 @@ def save_seen(seen: set[str]) -> None:
 def check_and_post(session: GarminSession, slack: WebClient,
                    watch_users: list[str], channel: str) -> None:
 
-    seen = load_seen()
+    seen, threads = load_seen()
     name_cache: dict[str, str] = {}  # display_name → full name for Slack message
 
     new_count = 0
@@ -552,11 +558,13 @@ def check_and_post(session: GarminSession, slack: WebClient,
             # Inject name so post_run can display it
             activity.setdefault("ownerFullName", full_name)
             log.info("New activity %s from %s", aid, full_name)
-            post_run(slack, channel, activity)
+            thread_ts = post_run(slack, channel, activity)
             seen.add(aid)
+            if thread_ts:
+                threads[aid] = thread_ts
             new_count += 1
 
-    save_seen(seen)
+    save_seen(seen, threads)
     if new_count == 0:
         log.info("No new runs.")
 
